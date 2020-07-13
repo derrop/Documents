@@ -8,6 +8,7 @@
     <artifactId>documents</artifactId>
     <version>1.0-RELEASE</version>
     <build>
+        <finalName>Documents</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
