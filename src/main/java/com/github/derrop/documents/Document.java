@@ -14,6 +14,10 @@ import java.util.Properties;
 
 public interface Document {
 
+    Object toPlainObjects();
+
+    JsonObject toJsonObject();
+
     Collection<String> keys();
 
     int size();

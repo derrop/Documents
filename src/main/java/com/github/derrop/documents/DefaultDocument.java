@@ -41,7 +41,7 @@ public class DefaultDocument implements Document {
             .registerTypeAdapterFactory(TypeAdapters.newTypeHierarchyFactory(DefaultDocument.class, TYPE_ADAPTER))
             .create();
 
-    protected final JsonObject jsonObject;
+    private final JsonObject jsonObject;
 
     public DefaultDocument(JsonObject jsonObject) {
         this.jsonObject = jsonObject;
@@ -99,14 +99,47 @@ public class DefaultDocument implements Document {
         this.append(key, value);
     }
 
-    public Collection<String> keys() {
-        Collection<String> collection = new ArrayList<>(this.jsonObject.size());
+    @Override
+    public Object toPlainObjects() {
+        return this.asObject(this.jsonObject);
+    }
 
-        for (Map.Entry<String, JsonElement> entry : this.jsonObject.entrySet()) {
-            collection.add(entry.getKey());
+    private Object asObject(JsonElement element) {
+        if (element.isJsonArray()) {
+            Collection<Object> array = new ArrayList<>(element.getAsJsonArray().size());
+            for (JsonElement jsonElement : element.getAsJsonArray()) {
+                array.add(this.asObject(jsonElement));
+            }
+            return array;
+        } else if (element.isJsonObject()) {
+            Map<String, Object> map = new HashMap<>(element.getAsJsonObject().size());
+            for (Map.Entry<String, JsonElement> entry : element.getAsJsonObject().entrySet()) {
+                Object value = this.asObject(entry.getValue());
+                if (value != null) {
+                    map.put(entry.getKey(), value);
+                }
+            }
+            return map;
+        } else if (element.isJsonPrimitive()) {
+            JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+            if (primitive.isString()) {
+                return primitive.getAsString();
+            } else if (primitive.isNumber()) {
+                return primitive.getAsNumber();
+            } else if (primitive.isBoolean()) {
+                return primitive.getAsBoolean();
+            } else {
+                return null;
+            }
+
+        } else {
+            return null;
         }
+    }
 
-        return collection;
+    public Collection<String> keys() {
+        return this.jsonObject.keySet();
     }
     
     public int size() {
@@ -114,10 +147,7 @@ public class DefaultDocument implements Document {
     }
     
     public DefaultDocument clear() {
-        for (Map.Entry<String, JsonElement> elementEntry : this.jsonObject.entrySet()) {
-            this.jsonObject.remove(elementEntry.getKey());
-        }
-
+        this.keys().forEach(this::remove);
         return this;
     }
     
@@ -691,8 +721,9 @@ public class DefaultDocument implements Document {
         return this.getChar(key);
     }
 
+    @Override
     public JsonObject toJsonObject() {
-        return jsonObject;
+        return this.jsonObject;
     }
 
     public String toPrettyJson() {

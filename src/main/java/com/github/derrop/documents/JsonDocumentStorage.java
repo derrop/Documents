@@ -9,7 +9,7 @@ import java.io.Writer;
 public class JsonDocumentStorage implements DocumentStorage {
 
     public void write(Document document, Writer writer) {
-        DefaultDocument.GSON.toJson(((DefaultDocument) document).jsonObject, writer);
+        DefaultDocument.GSON.toJson(document.toJsonObject(), writer);
     }
 
     public DefaultDocument read(Reader reader) {
