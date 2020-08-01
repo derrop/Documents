@@ -1,5 +1,8 @@
 package com.github.derrop.documents;
 
+import com.github.derrop.documents.storage.DocumentStorage;
+import com.github.derrop.documents.storage.JsonDocumentStorage;
+import com.github.derrop.documents.storage.YamlDocumentStorage;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

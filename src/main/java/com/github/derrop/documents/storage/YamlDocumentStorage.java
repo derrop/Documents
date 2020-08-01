@@ -1,5 +1,7 @@
-package com.github.derrop.documents;
+package com.github.derrop.documents.storage;
 
+import com.github.derrop.documents.DefaultDocument;
+import com.github.derrop.documents.Document;
 import com.google.gson.JsonElement;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;

@@ -1,5 +1,8 @@
 package com.github.derrop.documents;
 
+import com.github.derrop.documents.storage.DocumentStorage;
+import com.github.derrop.documents.storage.SpecificDocumentStorage;
+import com.github.derrop.documents.storage.WrappedSpecificDocumentStorage;
 import com.google.gson.*;
 import com.google.gson.internal.bind.TypeAdapters;
 import com.google.gson.stream.JsonReader;
@@ -719,6 +722,21 @@ public class DefaultDocument implements Document {
         }
 
         return this.getChar(key);
+    }
+
+    @Override
+    public SpecificDocumentStorage json() {
+        return this.storage(Documents.jsonStorage());
+    }
+
+    @Override
+    public SpecificDocumentStorage yaml() {
+        return this.storage(Documents.yamlStorage());
+    }
+
+    @Override
+    public SpecificDocumentStorage storage(DocumentStorage storage) {
+        return new WrappedSpecificDocumentStorage(this, storage);
     }
 
     @Override

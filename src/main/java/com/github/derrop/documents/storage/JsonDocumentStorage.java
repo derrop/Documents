@@ -1,5 +1,8 @@
-package com.github.derrop.documents;
+package com.github.derrop.documents.storage;
 
+import com.github.derrop.documents.DefaultDocument;
+import com.github.derrop.documents.Document;
+import com.github.derrop.documents.Documents;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
@@ -12,9 +15,9 @@ public class JsonDocumentStorage implements DocumentStorage {
         DefaultDocument.GSON.toJson(document.toJsonObject(), writer);
     }
 
-    public DefaultDocument read(Reader reader) {
+    public Document read(Reader reader) {
         try (BufferedReader bufferedReader = new BufferedReader(reader)) {
-            return new DefaultDocument().append(JsonParser.parseReader(bufferedReader).getAsJsonObject());
+            return Documents.newDocument(JsonParser.parseReader(bufferedReader).getAsJsonObject());
         } catch (Exception ex) {
             ex.getStackTrace();
         }

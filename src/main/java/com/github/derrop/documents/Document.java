@@ -1,5 +1,7 @@
 package com.github.derrop.documents;
 
+import com.github.derrop.documents.storage.DocumentStorage;
+import com.github.derrop.documents.storage.SpecificDocumentStorage;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -135,5 +137,11 @@ public interface Document {
     BigDecimal getBigDecimal(String key, BigDecimal def);
 
     Character getChar(String key, Character def);
+
+    SpecificDocumentStorage json();
+
+    SpecificDocumentStorage yaml();
+
+    SpecificDocumentStorage storage(DocumentStorage storage);
 
 }

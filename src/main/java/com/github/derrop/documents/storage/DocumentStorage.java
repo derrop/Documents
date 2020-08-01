@@ -1,4 +1,6 @@
-package com.github.derrop.documents;
+package com.github.derrop.documents.storage;
+
+import com.github.derrop.documents.Document;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
