@@ -15,7 +15,7 @@ Maven:
 <dependency>
     <groupId>com.github.derrop</groupId>
     <artifactId>documents</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.1-RELEASE</version>
 </dependency>
 ```
 
@@ -27,7 +27,7 @@ maven {
     url 'https://jitpack.io'
 }
 
-compile group: 'com.github.derrop', name: 'documents', version: '1.0-RELEASE'
+compile group: 'com.github.derrop', name: 'documents', version: '1.1-RELEASE'
 ```
 <br>
 
